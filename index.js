@@ -52,4 +52,54 @@ while (running) {
 
     }
 
+    // LOGIN
+    else if (choice === "2") {
+
+        var loginAcc = prompt("Enter Account Number");
+        var loginPin = prompt("Enter PIN");
+
+        // Stores index of logged-in user
+        var currentUser = -1;
+
+        // Search account
+        for (var i = 0; i < accountNumbers.length; i++) {
+
+            if (
+                accountNumbers[i] === loginAcc &&
+                pins[i] === loginPin
+            ) {
+
+                currentUser = i;
+
+            }
+
+        }
+
+        // Login failed
+        if (currentUser === -1) {
+
+            console.log("Invalid Account Number or PIN");
+
+        }
+
+        // Login successful
+        else {
+
+            console.log("Welcome " + names[currentUser]);
+
+            var loggedIn = true;
+
+            while (loggedIn) {
+
+                console.log("===== USER MENU =====");
+                console.log("1. Deposit");
+                console.log("2. Withdraw");
+                console.log("3. Transfer");
+                console.log("4. Check Balance");
+                console.log("5. Logout");
+
+                var userChoice = prompt("Enter Choice");
+            }
+        }
+    }
 }
