@@ -133,6 +133,42 @@ while (running) {
 
                 }
 
+                // WITHDRAW
+                else if (userChoice === "2") {
+
+                    var withdrawAmount = Number(
+                        prompt("Enter Withdraw Amount")
+                    );
+
+                    if (withdrawAmount <= 0) {
+
+                        console.log("Invalid Amount");
+
+                    }
+                    else if (
+                        withdrawAmount >
+                        balances[currentUser]
+                    ) {
+
+                        console.log("Insufficient Balance");
+
+                    }
+                    else {
+
+                        balances[currentUser] =
+                            balances[currentUser] -
+                            withdrawAmount;
+
+                        console.log("Withdrawal Successful");
+                        console.log(
+                            "Current Balance: " +
+                            balances[currentUser]
+                        );
+
+                    }
+
+                }
+
             }
         }
     }
