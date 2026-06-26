@@ -257,8 +257,30 @@ while (running) {
 
                     }
 
+                
                 }
+
             }
+
         }
+
     }
+
+    // EXIT
+    else if (choice === "3") {
+
+        running = false;
+
+        console.log(
+            "Thank You For Using Our Banking System"
+        );
+
+    }
+
+    else {
+
+        console.log("Invalid Choice");
+
+    }
+
 }
