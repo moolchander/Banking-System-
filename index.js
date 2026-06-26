@@ -92,6 +92,49 @@ while (running) {
 
             console.log("Welcome " + names[currentUser]);
 
+            var loggedIn = true;
+
+            while (loggedIn) {
+
+                var userChoice = prompt(
+                    "===== USER MENU =====\n" +
+                    "1. Deposit\n" +
+                    "2. Withdraw\n" +
+                    "3. Transfer\n" +
+                    "4. Check Balance\n" +
+                    "5. Logout"
+                );
+
+                // DEPOSIT
+                if (userChoice === "1") {
+
+                    var depositAmount = Number(
+                        prompt("Enter Deposit Amount")
+                    );
+
+                    if (depositAmount > 0) {
+
+                        balances[currentUser] =
+                            balances[currentUser] +
+                            depositAmount;
+
+                        console.log("Deposit Successful");
+                        console.log(
+                            "Current Balance: " +
+                            balances[currentUser]
+                        );
+
+                    }
+                    else {
+
+                        console.log("Invalid Amount");
+
+                    }
+
+                }
+
+            }
         }
     }
+
 }
