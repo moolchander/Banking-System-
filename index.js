@@ -1,20 +1,21 @@
+```javascript`
 // Arrays to store account information
 var accountNumbers = [];
 var pins = [];
 var names = [];
 var balances = [];
 
-// Controls the main program loop
+// Main program control
 var running = true;
 
 while (running) {
 
-    console.log("===== BANKING SYSTEM =====");
-    console.log("1. Create Account");
-    console.log("2. Login");
-    console.log("3. Exit");
-
-    var choice = prompt("Enter Choice");
+    var choice = prompt(
+        "===== BANKING SYSTEM =====\n" +
+        "1. Create Account\n" +
+        "2. Login\n" +
+        "3. Exit"
+    );
 
     // CREATE ACCOUNT
     if (choice === "1") {
@@ -22,10 +23,11 @@ while (running) {
         var accNo = prompt("Enter Account Number");
         var name = prompt("Enter Name");
         var pin = prompt("Enter PIN");
+        var balance = Number(prompt("Enter Initial Balance"));
 
-        // Check if account number already exists
         var exists = false;
 
+        // Check duplicate account number
         for (var i = 0; i < accountNumbers.length; i++) {
 
             if (accountNumbers[i] === accNo) {
@@ -38,15 +40,22 @@ while (running) {
 
             console.log("Account Number Already Exists");
 
-        } else {
+        }
+        else if (balance < 0) {
 
-            // Save account data
+            console.log("Balance Cannot Be Negative");
+
+        }
+        else {
+
             accountNumbers.push(accNo);
             pins.push(pin);
             names.push(name);
-            balances.push(0);
+            balances.push(balance);
 
             console.log("Account Created Successfully");
+            console.log("Account Holder: " + name);
+            console.log("Balance: " + balance);
 
         }
 
@@ -58,10 +67,9 @@ while (running) {
         var loginAcc = prompt("Enter Account Number");
         var loginPin = prompt("Enter PIN");
 
-        // Stores index of logged-in user
         var currentUser = -1;
 
-        // Search account
+        // Find account
         for (var i = 0; i < accountNumbers.length; i++) {
 
             if (
@@ -75,31 +83,15 @@ while (running) {
 
         }
 
-        // Login failed
         if (currentUser === -1) {
 
             console.log("Invalid Account Number or PIN");
 
         }
-
-        // Login successful
         else {
 
             console.log("Welcome " + names[currentUser]);
 
-            var loggedIn = true;
-
-            while (loggedIn) {
-
-                console.log("===== USER MENU =====");
-                console.log("1. Deposit");
-                console.log("2. Withdraw");
-                console.log("3. Transfer");
-                console.log("4. Check Balance");
-                console.log("5. Logout");
-
-                var userChoice = prompt("Enter Choice");
-            }
         }
     }
 }
