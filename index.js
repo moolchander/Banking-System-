@@ -169,8 +169,96 @@ while (running) {
 
                 }
 
+                // TRANSFER
+                else if (userChoice === "3") {
+
+                    var receiverAcc =
+                        prompt("Enter Receiver Account Number");
+
+                    var transferAmount = Number(
+                        prompt("Enter Transfer Amount")
+                    );
+
+                    var receiverIndex = -1;
+
+                    // Find receiver
+                    for (
+                        var i = 0;
+                        i < accountNumbers.length;
+                        i++
+                    ) {
+
+                        if (
+                            accountNumbers[i] === receiverAcc
+                        ) {
+
+                            receiverIndex = i;
+
+                        }
+
+                    }
+
+                    if (receiverIndex === -1) {
+
+                        console.log(
+                            "Receiver Account Not Found"
+                        );
+
+                    }
+                    else if (
+                        receiverIndex === currentUser
+                    ) {
+
+                        console.log(
+                            "Cannot Transfer To Your Own Account"
+                        );
+
+                    }
+                    else if (
+                        transferAmount <= 0
+                    ) {
+
+                        console.log("Invalid Amount");
+
+                    }
+                    else if (
+                        transferAmount >
+                        balances[currentUser]
+                    ) {
+
+                        console.log(
+                            "Insufficient Balance"
+                        );
+
+                    }
+                    else {
+
+                        balances[currentUser] =
+                            balances[currentUser] -
+                            transferAmount;
+
+                        balances[receiverIndex] =
+                            balances[receiverIndex] +
+                            transferAmount;
+
+                        console.log(
+                            "Transfer Successful"
+                        );
+
+                        console.log(
+                            "Transferred To: " +
+                            names[receiverIndex]
+                        );
+
+                        console.log(
+                            "Current Balance: " +
+                            balances[currentUser]
+                        );
+
+                    }
+
+                }
             }
         }
     }
-
 }
