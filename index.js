@@ -1,4 +1,4 @@
-```javascript`
+
 // Arrays to store account information
 var accountNumbers = [];
 var pins = [];
@@ -12,9 +12,10 @@ while (running) {
 
     var choice = prompt(
         "===== BANKING SYSTEM =====\n" +
-        "1. Create Account\n" +
-        "2. Login\n" +
-        "3. Exit"
+            "1. Create Account\n" +
+            "2. Login\n" +
+              "3. Exit"
+        
     );
 
     // CREATE ACCOUNT
@@ -257,7 +258,41 @@ while (running) {
 
                     }
 
-                
+                }
+
+                // CHECK BALANCE
+                else if (userChoice === "4") {
+
+                    console.log(
+                        "Account Holder: " +
+                        names[currentUser]
+                    );
+
+                    console.log(
+                        "Account Number: " +
+                        accountNumbers[currentUser]
+                    );
+
+                    console.log(
+                        "Current Balance: " +
+                        balances[currentUser]
+                    );
+
+                }
+
+                // LOGOUT
+                else if (userChoice === "5") {
+
+                    loggedIn = false;
+
+                    console.log("Logged Out");
+
+                }
+
+                else {
+
+                    console.log("Invalid Option");
+
                 }
 
             }
