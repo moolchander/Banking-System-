@@ -1,176 +1,287 @@
+// SIMPLE BANKING SYSTEM
+
 // Arrays to store account information
 var accountNumbers = [];
 var pins = [];
 var names = [];
 var balances = [];
 
-// Main program control
+// Controls the program
 var running = true;
 
 while (running) {
-  var choice = prompt(
-    "===== BANKING SYSTEM =====\n" +
-      "1. Create Account\n" +
-      "2. Login\n" +
-      "3. Exit",
-  );
 
-  // CREATE ACCOUNT
-  if (choice === "1") {
-    var accNo = prompt("Enter Account Number");
-    var name = prompt("Enter Name");
-    var pin = prompt("Enter PIN");
-    var balance = Number(prompt("Enter Initial Balance"));
+    var choice = prompt(
+        "===== BANKING SYSTEM =====\n" +
+        "1. Create Account\n" +
+        "2. Login\n" +
+        "3. Exit"
+    );
 
-    var exists = false;
+    // ==========================
+    // CREATE ACCOUNT
+    // ==========================
+    if (choice === "1") {
 
-    // Check duplicate account number
-    for (var i = 0; i < accountNumbers.length; i++) {
-      if (accountNumbers[i] === accNo) {
-        exists = true;
-      }
-    }
+        var accNo = prompt("Enter Account Number");
+        var name = prompt("Enter Name");
+        var pin = prompt("Enter PIN");
+        var balance = Number(prompt("Enter Initial Balance"));
 
-    if (exists) {
-      console.log("Account Number Already Exists");
-    } else if (balance < 0) {
-      console.log("Balance Cannot Be Negative");
-    } else {
-      accountNumbers.push(accNo);
-      pins.push(pin);
-      names.push(name);
-      balances.push(balance);
+        if (accountNumbers.includes(accNo)) {
 
-      console.log("Account Created Successfully");
-      console.log("Account Holder: " + name);
-      console.log("Balance: " + balance);
-    }
-  }
+            alert("❌ Account Number Already Exists");
 
-  // LOGIN
-  else if (choice === "2") {
-    var loginAcc = prompt("Enter Account Number");
-    var loginPin = prompt("Enter PIN");
-
-    var currentUser = -1;
-
-    // Find account
-    for (var i = 0; i < accountNumbers.length; i++) {
-      if (accountNumbers[i] === loginAcc && pins[i] === loginPin) {
-        currentUser = i;
-      }
-    }
-
-    if (currentUser === -1) {
-      console.log("Invalid Account Number or PIN");
-    } else {
-      console.log("Welcome " + names[currentUser]);
-
-      var loggedIn = true;
-
-      while (loggedIn) {
-        var userChoice = prompt(
-          "===== USER MENU =====\n" +
-            "1. Deposit\n" +
-            "2. Withdraw\n" +
-            "3. Transfer\n" +
-            "4. Check Balance\n" +
-            "5. Logout",
-        );
-
-        // DEPOSIT
-        if (userChoice === "1") {
-          var depositAmount = Number(prompt("Enter Deposit Amount"));
-
-          if (depositAmount > 0) {
-            balances[currentUser] = balances[currentUser] + depositAmount;
-
-            console.log("Deposit Successful");
-            console.log("Current Balance: " + balances[currentUser]);
-          } else {
-            console.log("Invalid Amount");
-          }
         }
+        else if (balance < 0) {
 
-        // WITHDRAW
-        else if (userChoice === "2") {
-          var withdrawAmount = Number(prompt("Enter Withdraw Amount"));
+            alert("❌ Balance Cannot Be Negative");
 
-          if (withdrawAmount <= 0) {
-            console.log("Invalid Amount");
-          } else if (withdrawAmount > balances[currentUser]) {
-            console.log("Insufficient Balance");
-          } else {
-            balances[currentUser] = balances[currentUser] - withdrawAmount;
-
-            console.log("Withdrawal Successful");
-            console.log("Current Balance: " + balances[currentUser]);
-          }
         }
+        else {
 
-        // TRANSFER
-        else if (userChoice === "3") {
-          var receiverAcc = prompt("Enter Receiver Account Number");
+            accountNumbers.push(accNo);
+            names.push(name);
+            pins.push(pin);
+            balances.push(balance);
 
-          var transferAmount = Number(prompt("Enter Transfer Amount"));
+            alert(
+                "✅ Account Created Successfully\n\n" +
+                "Name : " + name +
+                "\nAccount Number : " + accNo +
+                "\nBalance : " + balance
+            );
+        }
+    }
 
-          var receiverIndex = -1;
+    // ==========================
+    // LOGIN
+    // ==========================
+    else if (choice === "2") {
 
-          // Find receiver
-          for (var i = 0; i < accountNumbers.length; i++) {
-            if (accountNumbers[i] === receiverAcc) {
-              receiverIndex = i;
+        var loggedInSuccessfully = false;
+
+        while (!loggedInSuccessfully) {
+
+            var loginAcc = prompt("Enter Account Number");
+            var loginPin = prompt("Enter PIN");
+
+            var currentUser = accountNumbers.indexOf(loginAcc);
+
+            if (
+                currentUser !== -1 &&
+                pins[currentUser] === loginPin
+            ) {
+
+                loggedInSuccessfully = true;
+
+                alert(
+                    "✅ Login Successful\n\n" +
+                    "Welcome " + names[currentUser]
+                );
+
+                var loggedIn = true;
+
+                while (loggedIn) {
+
+                    var userChoice = prompt(
+                        "===== USER MENU =====\n" +
+                        "1. Deposit\n" +
+                        "2. Withdraw\n" +
+                        "3. Transfer\n" +
+                        "4. Check Balance\n" +
+                        "5. Logout"
+                    );
+
+                    // ==========================
+                    // DEPOSIT
+                    // ==========================
+                    if (userChoice === "1") {
+
+                        var depositAmount =
+                        Number(prompt("Enter Deposit Amount"));
+
+                        if (isNaN(depositAmount)) {
+
+                            alert("❌ Please Enter Numbers Only");
+
+                        }
+                        else if (depositAmount <= 0) {
+
+                            alert("❌ Invalid Amount");
+
+                        }
+                        else {
+
+                            balances[currentUser] =
+                            balances[currentUser] + depositAmount;
+
+                            alert(
+                                "✅ Deposit Successful\n\n" +
+                                "Deposited : " + depositAmount +
+                                "\nCurrent Balance : " +
+                                balances[currentUser]
+                            );
+                        }
+                    }
+
+                    // ==========================
+                    // WITHDRAW
+                    // ==========================
+                    else if (userChoice === "2") {
+
+                        var withdrawAmount =
+                        Number(prompt("Enter Withdraw Amount"));
+
+                        if (isNaN(withdrawAmount)) {
+
+                            alert("❌ Please Enter Numbers Only");
+
+                        }
+                        else if (withdrawAmount <= 0) {
+
+                            alert("❌ Invalid Amount");
+
+                        }
+                        else if (withdrawAmount > balances[currentUser]) {
+
+                            alert("❌ Insufficient Balance");
+
+                        }
+                        else {
+
+                            balances[currentUser] =
+                            balances[currentUser] - withdrawAmount;
+
+                            alert(
+                                "✅ Withdrawal Successful\n\n" +
+                                "Withdrawn : " + withdrawAmount +
+                                "\nCurrent Balance : " +
+                                balances[currentUser]
+                            );
+                        }
+                    }
+                                        // ==========================
+                    // TRANSFER
+                    // ==========================
+                    else if (userChoice === "3") {
+
+                        var receiverAcc =
+                        prompt("Enter Receiver Account Number");
+
+                        var receiverIndex =
+                        accountNumbers.indexOf(receiverAcc);
+
+                        if (receiverIndex === -1) {
+
+                            alert("❌ Receiver Account Not Found");
+
+                        }
+                        else if (receiverIndex === currentUser) {
+
+                            alert("❌ You Cannot Transfer To Your Own Account");
+
+                        }
+                        else {
+
+                            var transferAmount =
+                            Number(prompt("Enter Transfer Amount"));
+
+                            if (isNaN(transferAmount)) {
+
+                                alert("❌ Please Enter Numbers Only");
+
+                            }
+                            else if (transferAmount <= 0) {
+
+                                alert("❌ Invalid Amount");
+
+                            }
+                            else if (transferAmount > balances[currentUser]) {
+
+                                alert("❌ Insufficient Balance");
+
+                            }
+                            else {
+
+                                balances[currentUser] =
+                                balances[currentUser] - transferAmount;
+
+                                balances[receiverIndex] =
+                                balances[receiverIndex] + transferAmount;
+
+                                alert(
+                                    "✅ Transfer Successful\n\n" +
+                                    "Transferred To : " +
+                                    names[receiverIndex] +
+                                    "\nAmount : " +
+                                    transferAmount +
+                                    "\nRemaining Balance : " +
+                                    balances[currentUser]
+                                );
+                            }
+                        }
+                    }
+
+                    // ==========================
+                    // CHECK BALANCE
+                    // ==========================
+                    else if (userChoice === "4") {
+
+                        alert(
+                            "===== ACCOUNT DETAILS =====\n\n" +
+                            "Account Holder : " +
+                            names[currentUser] +
+                            "\nAccount Number : " +
+                            accountNumbers[currentUser] +
+                            "\nCurrent Balance : " +
+                            balances[currentUser]
+                        );
+                    }
+
+                    // ==========================
+                    // LOGOUT
+                    // ==========================
+                    else if (userChoice === "5") {
+
+                        loggedIn = false;
+
+                        alert("✅ Logged Out Successfully");
+                    }
+
+                    // ==========================
+                    // INVALID USER OPTION
+                    // ==========================
+                    else {
+
+                        alert("❌ Invalid Option");
+                    }
+
+                }
             }
-          }
+            else {
 
-          if (receiverIndex === -1) {
-            console.log("Receiver Account Not Found");
-          } else if (receiverIndex === currentUser) {
-            console.log("Cannot Transfer To Your Own Account");
-          } else if (transferAmount <= 0) {
-            console.log("Invalid Amount");
-          } else if (transferAmount > balances[currentUser]) {
-            console.log("Insufficient Balance");
-          } else {
-            balances[currentUser] = balances[currentUser] - transferAmount;
+                alert("❌ Invalid Account Number or PIN\nPlease Try Again.");
 
-            balances[receiverIndex] = balances[receiverIndex] + transferAmount;
-
-            console.log("Transfer Successful");
-
-            console.log("Transferred To: " + names[receiverIndex]);
-
-            console.log("Current Balance: " + balances[currentUser]);
-          }
+            }
         }
-
-        // CHECK BALANCE
-        else if (userChoice === "4") {
-          console.log("Account Holder: " + names[currentUser]);
-
-          console.log("Account Number: " + accountNumbers[currentUser]);
-
-          console.log("Current Balance: " + balances[currentUser]);
-        }
-
-        // LOGOUT
-        else if (userChoice === "5") {
-          loggedIn = false;
-
-          console.log("Logged Out");
-        } else {
-          console.log("Invalid Option");
-        }
-      }
     }
-  }
 
-  // EXIT
-  else if (choice === "3") {
-    running = false;
+    // ==========================
+    // EXIT
+    // ==========================
+    else if (choice === "3") {
 
-    console.log("Thank You For Using Our Banking System");
-  } else {
-    console.log("Invalid Choice");
-  }
+        running = false;
+
+        alert("🙏 Thank You For Using Our Banking System!");
+    }
+
+    // ==========================
+    // INVALID MAIN MENU OPTION
+    // ==========================
+    else {
+
+        alert("❌ Invalid Choice");
+    }
 }
